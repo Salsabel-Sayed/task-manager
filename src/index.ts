@@ -5,6 +5,7 @@ import { AppErrors } from "./middleware/Errors/AppErrors";
 import { bootstrap } from "./bootstrap";
 import cors from "cors"
 import dotenv from "dotenv"
+import path from "path";
 dotenv.config()
 
 dbConnection()
@@ -17,6 +18,10 @@ app.use('*',(req,res,next)=>{
     next(new AppErrors(`route not found ${req.originalUrl}`, 404))
 })
 app.use(cors())
+app.set("views",path.resolve()+"/views")
+app.set("views engine","ejs")
+app.use(express.static(path.join(path.resolve(),"public")))
+
 app.use(GlobalErrors)
 
 

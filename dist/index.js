@@ -10,6 +10,7 @@ const AppErrors_1 = require("./middleware/Errors/AppErrors");
 const bootstrap_1 = require("./bootstrap");
 const cors_1 = __importDefault(require("cors"));
 const dotenv_1 = __importDefault(require("dotenv"));
+const path_1 = __importDefault(require("path"));
 dotenv_1.default.config();
 (0, dbConnection_1.dbConnection)();
 const app = (0, express_1.default)();
@@ -20,5 +21,8 @@ app.use('*', (req, res, next) => {
     next(new AppErrors_1.AppErrors(`route not found ${req.originalUrl}`, 404));
 });
 app.use((0, cors_1.default)());
+app.set("views", path_1.default.resolve() + "/views");
+app.set("views engine", "ejs");
+app.use(express_1.default.static(path_1.default.join(path_1.default.resolve(), "public")));
 app.use(GlobalErrors_1.GlobalErrors);
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));
