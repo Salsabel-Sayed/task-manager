@@ -1,0 +1,17 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const verifyToken_1 = require("../../middleware/token/verifyToken");
+const tasks_controller_1 = require("./tasks.controller");
+const validate_1 = require("../../middleware/validations/validate");
+const tasks_validate_1 = require("./tasks.validate");
+const taskRouter = (0, express_1.Router)();
+taskRouter.post('/createTask/', (0, validate_1.validate)(tasks_validate_1.taskVal), verifyToken_1.protectedRoute, tasks_controller_1.createTask);
+taskRouter.get('/getAllTasks/', verifyToken_1.protectedRoute, tasks_controller_1.getAllTasks);
+taskRouter.get('/getSpecificTask/:id', verifyToken_1.protectedRoute, tasks_controller_1.getSpecificTask);
+taskRouter.put('/updateTask/:id', (0, validate_1.validate)(tasks_validate_1.taskVal), verifyToken_1.protectedRoute, tasks_controller_1.updateTask);
+taskRouter.patch('/updateCompletedTask/:id', verifyToken_1.protectedRoute, tasks_controller_1.updateCompletedTask);
+taskRouter.delete('/deleteSpecificTask/:id', verifyToken_1.protectedRoute, tasks_controller_1.deleteSpecificTask);
+taskRouter.delete('/deleteAllTasks/:id', verifyToken_1.protectedRoute, tasks_controller_1.deleteAllTasks);
+taskRouter.get('/filterCompletedTasks/', verifyToken_1.protectedRoute, tasks_controller_1.filterCompletedTasks);
+exports.default = taskRouter;
