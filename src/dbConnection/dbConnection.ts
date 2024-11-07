@@ -2,7 +2,7 @@ import { connect } from "mongoose";
 
 
 export function dbConnection() {
-    connect('mongodb://localhost:27017/task-manager')
+    connect('mongodb+srv://taskmanager:zAfF9ewKr9qiJTY0@atlascluster.ukscwpx.mongodb.net/task-manager1')
     .then(async () => {
         console.log('DB connected');
     }).catch(()=>{

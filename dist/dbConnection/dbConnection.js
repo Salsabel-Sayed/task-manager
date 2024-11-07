@@ -12,7 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.dbConnection = dbConnection;
 const mongoose_1 = require("mongoose");
 function dbConnection() {
-    (0, mongoose_1.connect)('mongodb://localhost:27017/task-manager')
+    (0, mongoose_1.connect)('mongodb+srv://taskmanager:zAfF9ewKr9qiJTY0@atlascluster.ukscwpx.mongodb.net/task-manager1')
         .then(() => __awaiter(this, void 0, void 0, function* () {
         console.log('DB connected');
     })).catch(() => {
