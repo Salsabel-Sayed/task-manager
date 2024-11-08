@@ -18,11 +18,11 @@ const AppErrors_1 = require("../Errors/AppErrors");
 const CatchErrors_1 = require("../Errors/CatchErrors");
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 exports.protectedRoute = (0, CatchErrors_1.CatchErrors)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    let { Authorization } = req.headers;
+    let { authorization } = req.headers;
     let userPayload = null;
-    if (!Authorization)
+    if (!authorization)
         return next(new AppErrors_1.AppErrors('token is not provided', 404));
-    jsonwebtoken_1.default.verify(Authorization, 'taskManager', (err, payload) => {
+    jsonwebtoken_1.default.verify(authorization, 'taskManager', (err, payload) => {
         if (err)
             return next(new AppErrors_1.AppErrors(err, 401));
         userPayload = payload;

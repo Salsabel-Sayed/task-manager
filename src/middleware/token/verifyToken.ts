@@ -10,7 +10,7 @@ import jwt from 'jsonwebtoken';
 export const protectedRoute = CatchErrors(async (req: CustomRequest, res: Response, next: NextFunction) => {
     let { authorization } = req.headers
     let userPayload:any = null
-    if (!authorization) return next(new AppErrors('token is provided', 404))
+    if (!authorization) return next(new AppErrors('token is not provided', 404))
 
     jwt.verify(authorization, 'taskManager', (err:any, payload:any) => {
         if (err) return next(new AppErrors(err, 401))
