@@ -87,13 +87,11 @@ export const deleteAllTasks = CatchErrors(async (req: Request, res: Response, ne
 // * filter completed tasks
 export const filterCompletedTasks = CatchErrors(async (req: Request, res: Response, next: NextFunction) => {
     const userId = req.user?.id; 
-    const { status } = req.query;  
-    let filter:any = { userId: userId };  
-    if (status === 'completed') {  
-        filter.completed = true;  
-    } else if (status === 'not-completed') {  
-        filter.completed = false;  
-    }  
-    const tasks = await Task.find(filter);  
-    res.json({ message:"filtered tasks",tasks }); 
+     const findCompleted = await Task.find({ userId, completed: true });
+
+    if (!findCompleted || findCompleted.length === 0) {
+        return next(new AppErrors("Can't find completed tasks", 404));
+    }
+    if(!findCompleted) return next(new AppErrors("can`t find completed tasks",404))
+        res.json({ message:"completed tasks",findCompleted })
 })

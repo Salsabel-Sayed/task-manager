@@ -101,14 +101,11 @@ exports.deleteAllTasks = (0, CatchErrors_1.CatchErrors)((req, res, next) => __aw
 exports.filterCompletedTasks = (0, CatchErrors_1.CatchErrors)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     var _a;
     const userId = (_a = req.user) === null || _a === void 0 ? void 0 : _a.id;
-    const { status } = req.query;
-    let filter = { userId: userId };
-    if (status === 'completed') {
-        filter.completed = true;
+    const findCompleted = yield tasks_models_1.Task.find({ userId, completed: true });
+    if (!findCompleted || findCompleted.length === 0) {
+        return next(new AppErrors_1.AppErrors("Can't find completed tasks", 404));
     }
-    else if (status === 'not-completed') {
-        filter.completed = false;
-    }
-    const tasks = yield tasks_models_1.Task.find(filter);
-    res.json({ message: "filtered tasks", tasks });
+    if (!findCompleted)
+        return next(new AppErrors_1.AppErrors("can`t find completed tasks", 404));
+    res.json({ message: "completed tasks", findCompleted });
 }));
