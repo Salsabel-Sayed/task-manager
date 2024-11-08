@@ -8,5 +8,6 @@ const joi_1 = __importDefault(require("joi"));
 const taskVal = joi_1.default.object({
     title: joi_1.default.string().min(3).max(20),
     description: joi_1.default.string().min(3).max(100),
+    completed: joi_1.default.boolean()
 });
 exports.taskVal = taskVal;
