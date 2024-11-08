@@ -20,7 +20,12 @@ app.use(express_1.default.json());
 app.use('*', (req, res, next) => {
     next(new AppErrors_1.AppErrors(`route not found ${req.originalUrl}`, 404));
 });
-app.use((0, cors_1.default)());
+const corsOptions = {
+    origin: 'http://localhost:3000', // Allow requests only from this origin
+    methods: ['GET', 'POST', 'PUT', 'DELETE'], // Allowed HTTP methods
+    allowedHeaders: ['Content-Type', 'Authorization'], // Allowed headers
+};
+app.use((0, cors_1.default)(corsOptions));
 app.set("views", path_1.default.resolve() + "/views");
 app.set("views engine", "ejs");
 app.use(express_1.default.static(path_1.default.join(path_1.default.resolve(), "public")));

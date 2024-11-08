@@ -21,7 +21,7 @@ exports.protectedRoute = (0, CatchErrors_1.CatchErrors)((req, res, next) => __aw
     let { authorization } = req.headers;
     let userPayload = null;
     if (!authorization)
-        return next(new AppErrors_1.AppErrors('token is not provided', 404));
+        return next(new AppErrors_1.AppErrors('token is provided', 404));
     jsonwebtoken_1.default.verify(authorization, 'taskManager', (err, payload) => {
         if (err)
             return next(new AppErrors_1.AppErrors(err, 401));
