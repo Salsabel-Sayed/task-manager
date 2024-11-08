@@ -20,7 +20,7 @@ app.use('*',(req,res,next)=>{
 
 const corsOptions = {
   origin: 'http://localhost:3000',  // Allow requests only from this origin
-  methods: ['GET', 'POST', 'PUT', 'DELETE'], // Allowed HTTP methods
+  methods: ['GET', 'POST', 'PUT', 'DELETE','PATCH'], // Allowed HTTP methods
   allowedHeaders: ['Content-Type', 'Authorization'], // Allowed headers
 };
 app.use(cors(corsOptions))
