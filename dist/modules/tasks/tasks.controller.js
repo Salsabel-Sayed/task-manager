@@ -18,7 +18,7 @@ const auth_models_1 = require("../auth/auth.models");
 // * create task
 exports.createTask = (0, CatchErrors_1.CatchErrors)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     var _a;
-    const { title, description, completed } = req.body;
+    const { title, description, completed = false } = req.body;
     const userId = (_a = req.user) === null || _a === void 0 ? void 0 : _a.id;
     const task = yield tasks_models_1.Task.create({ title, description, completed, userId });
     yield auth_models_1.User.findByIdAndUpdate(userId, { $push: { tasks: task._id } }, { new: true });

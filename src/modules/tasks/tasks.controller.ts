@@ -8,7 +8,7 @@ import { User } from "../auth/auth.models";
 
 // * create task
 export const createTask = CatchErrors(async (req: Request, res: Response, next: NextFunction) => {
-    const { title, description, completed } = req.body;
+    const { title, description, completed = false  } = req.body;
     const userId = req.user?.id
     const task = await Task.create({ title, description, completed, userId });
     await User.findByIdAndUpdate(userId, { $push: { tasks: task._id } }, { new: true }); 
