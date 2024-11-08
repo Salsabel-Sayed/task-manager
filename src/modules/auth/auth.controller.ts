@@ -22,8 +22,7 @@ export const signup = CatchErrors(async (req: CustomRequest, res: Response, next
 // * login
 export const login = CatchErrors(async (req: CustomRequest, res: Response, next: NextFunction) => {
     const { email, password } = req.body;
-    const userId = req.user?.id
-        const user = await User.findById(userId)
+        const user = await User.findById(email)
     if(!user) return next(new AppErrors("user not found!!!!",400))
         const isMatch = await bcrypt.compare(password, user.password)
     if(!isMatch) return next(new AppErrors("password not match!!!!",400))

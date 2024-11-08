@@ -30,10 +30,8 @@ exports.signup = (0, CatchErrors_1.CatchErrors)((req, res, next) => __awaiter(vo
 // ? //////////////////////////////////////////////////////////////////////////////////////////////////////
 // * login
 exports.login = (0, CatchErrors_1.CatchErrors)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    var _a;
     const { email, password } = req.body;
-    const userId = (_a = req.user) === null || _a === void 0 ? void 0 : _a.id;
-    const user = yield auth_models_1.User.findById(userId);
+    const user = yield auth_models_1.User.findById(email);
     if (!user)
         return next(new AppErrors_1.AppErrors("user not found!!!!", 400));
     const isMatch = yield bcrypt_1.default.compare(password, user.password);
