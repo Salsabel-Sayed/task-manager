@@ -31,7 +31,8 @@ exports.signup = (0, CatchErrors_1.CatchErrors)((req, res, next) => __awaiter(vo
 // * login
 exports.login = (0, CatchErrors_1.CatchErrors)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const { email, password } = req.body;
-    const user = yield auth_models_1.User.findById(email);
+    const user = yield auth_models_1.User.findOne({ email });
+    console.log("user", user);
     if (!user)
         return next(new AppErrors_1.AppErrors("user not found!!!!", 400));
     const isMatch = yield bcrypt_1.default.compare(password, user.password);
@@ -43,6 +44,7 @@ exports.login = (0, CatchErrors_1.CatchErrors)((req, res, next) => __awaiter(voi
         password: user.password,
         email: user.email
     }, "taskManager");
+    console.log("token", authorization);
     res.status(200).json({ message: "login done! welcome *-*", user, authorization });
 }));
 // ? //////////////////////////////////////////////////////////////////////////////////////////////////////

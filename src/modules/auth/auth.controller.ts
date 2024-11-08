@@ -22,7 +22,9 @@ export const signup = CatchErrors(async (req: CustomRequest, res: Response, next
 // * login
 export const login = CatchErrors(async (req: CustomRequest, res: Response, next: NextFunction) => {
     const { email, password } = req.body;
-        const user = await User.findById(email)
+        const user = await User.findOne({email})
+        console.log("user",user);
+        
     if(!user) return next(new AppErrors("user not found!!!!",400))
         const isMatch = await bcrypt.compare(password, user.password)
     if(!isMatch) return next(new AppErrors("password not match!!!!",400))
@@ -32,6 +34,8 @@ export const login = CatchErrors(async (req: CustomRequest, res: Response, next:
     password: user.password,
     email: user.email
 },"taskManager")
+console.log("token",authorization);
+
         res.status(200).json({message:"login done! welcome *-*",user,authorization});
 })
 
