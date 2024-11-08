@@ -75,14 +75,19 @@ export const deleteSpecificTask = CatchErrors(async (req: Request, res: Response
 
 // ? //////////////////////////////////////////////////////////////////////////////////////////////////////
 // * delete all user tasks
-export const deleteAllTasks = CatchErrors(async (req: Request, res: Response, next: NextFunction) => {
-    const userId = req.user?.id
-    const findAllTasks = await Task.find({userId})
-    if(!findAllTasks) return next(new AppErrors("cant find user tasks! ,sorry!",404))
-        const deletedTasks = await Task.deleteMany({userId})
-        await User.findByIdAndUpdate(userId, { $set: { tasks: [] } });
-    res.json({message:"tasks deleted",deletedTasks});
-})
+export const deleteAllTasks = CatchErrors(async (req, res, next) => {
+  const userId = req.user?.id;
+  if (!userId) return next(new AppErrors("User ID not provided.", 400));
+
+  const findAllTasks = await Task.find({ userId });
+  if (!findAllTasks.length) return next(new AppErrors("No tasks found for user.", 404));
+
+  const deletedTasks = await Task.deleteMany({ userId });
+  await User.findByIdAndUpdate(userId, { $set: { tasks: [] } });
+  
+  res.json({ message: "Tasks deleted", deletedTasks });
+});
+
 // ? //////////////////////////////////////////////////////////////////////////////////////////////////////
 // * filter completed tasks
 export const filterCompletedTasks = CatchErrors(async (req: Request, res: Response, next: NextFunction) => {

@@ -15,7 +15,7 @@ taskRouter.get('/getSpecificTask/:id',protectedRoute,getSpecificTask)
 taskRouter.put('/updateTask/:id',validate(taskVal),protectedRoute,updateTask)
 taskRouter.patch('/updateCompletedTask/:id',protectedRoute,updateCompletedTask)
 taskRouter.delete('/deleteSpecificTask/:id',protectedRoute,deleteSpecificTask)
-taskRouter.delete('/deleteAllTasks/:id',protectedRoute,deleteAllTasks)
+taskRouter.delete('/deleteAllTasks/',protectedRoute,deleteAllTasks)
 taskRouter.get('/filterCompletedTasks/',protectedRoute,filterCompletedTasks)
 
 export default taskRouter

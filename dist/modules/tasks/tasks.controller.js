@@ -89,12 +89,14 @@ exports.deleteSpecificTask = (0, CatchErrors_1.CatchErrors)((req, res, next) => 
 exports.deleteAllTasks = (0, CatchErrors_1.CatchErrors)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     var _a;
     const userId = (_a = req.user) === null || _a === void 0 ? void 0 : _a.id;
+    if (!userId)
+        return next(new AppErrors_1.AppErrors("User ID not provided.", 400));
     const findAllTasks = yield tasks_models_1.Task.find({ userId });
-    if (!findAllTasks)
-        return next(new AppErrors_1.AppErrors("cant find user tasks! ,sorry!", 404));
+    if (!findAllTasks.length)
+        return next(new AppErrors_1.AppErrors("No tasks found for user.", 404));
     const deletedTasks = yield tasks_models_1.Task.deleteMany({ userId });
     yield auth_models_1.User.findByIdAndUpdate(userId, { $set: { tasks: [] } });
-    res.json({ message: "tasks deleted", deletedTasks });
+    res.json({ message: "Tasks deleted", deletedTasks });
 }));
 // ? //////////////////////////////////////////////////////////////////////////////////////////////////////
 // * filter completed tasks
