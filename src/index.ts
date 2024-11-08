@@ -20,11 +20,6 @@ app.use('*',(req,res,next)=>{
     next(new AppErrors(`route not found ${req.originalUrl}`, 404))
 })
 
-// const corsOptions = {
-//   origin: 'http://localhost:3000',  // Allow requests only from this origin
-//   methods: ['GET', 'POST', 'PUT', 'DELETE','PATCH'], // Allowed HTTP methods
-//   allowedHeaders: ['Content-Type', 'Authorization'], // Allowed headers
-// };
 
 app.set("views",path.resolve()+"/views")
 app.set("views engine","ejs")

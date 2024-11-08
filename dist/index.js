@@ -14,18 +14,13 @@ const path_1 = __importDefault(require("path"));
 dotenv_1.default.config();
 (0, dbConnection_1.dbConnection)();
 const app = (0, express_1.default)();
+app.use((0, cors_1.default)());
 const port = process.env.PORT || 3000;
 app.use(express_1.default.json());
 (0, bootstrap_1.bootstrap)(app);
 app.use('*', (req, res, next) => {
     next(new AppErrors_1.AppErrors(`route not found ${req.originalUrl}`, 404));
 });
-const corsOptions = {
-    origin: 'http://localhost:3000', // Allow requests only from this origin
-    methods: ['GET', 'POST', 'PUT', 'DELETE'], // Allowed HTTP methods
-    allowedHeaders: ['Content-Type', 'Authorization'], // Allowed headers
-};
-app.use((0, cors_1.default)(corsOptions));
 app.set("views", path_1.default.resolve() + "/views");
 app.set("views engine", "ejs");
 app.use(express_1.default.static(path_1.default.join(path_1.default.resolve(), "public")));
