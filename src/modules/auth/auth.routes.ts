@@ -11,7 +11,7 @@ import { userVal } from "./auth.validation";
 const userRouter = Router()
 
 userRouter.post('/signup/',validate(userVal),checkEmail,signup)
-userRouter.post('/login/',protectedRoute,login)
+userRouter.post('/login/',login)
 userRouter.put('/updateUser/:id',validate(userVal),protectedRoute,updateUser)
 userRouter.delete('/deleteUser/:id',protectedRoute,deleteUser)
 userRouter.get('/getUser/:id',protectedRoute,getUser)

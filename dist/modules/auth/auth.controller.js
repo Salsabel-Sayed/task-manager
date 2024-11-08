@@ -25,13 +25,7 @@ exports.signup = (0, CatchErrors_1.CatchErrors)((req, res, next) => __awaiter(vo
     if (!user)
         return next(new AppErrors_1.AppErrors("your info not found!!!!", 400));
     yield user.save();
-    const authorization = jsonwebtoken_1.default.sign({
-        id: user._id,
-        userName: user.userName,
-        password: user.password,
-        email: user.email
-    }, "taskManager");
-    res.status(201).json({ message: "signup done! welcome *-*", user, authorization });
+    res.status(201).json({ message: "signup done! welcome *-*", user });
 }));
 // ? //////////////////////////////////////////////////////////////////////////////////////////////////////
 // * login
@@ -45,7 +39,13 @@ exports.login = (0, CatchErrors_1.CatchErrors)((req, res, next) => __awaiter(voi
     const isMatch = yield bcrypt_1.default.compare(password, user.password);
     if (!isMatch)
         return next(new AppErrors_1.AppErrors("password not match!!!!", 400));
-    res.status(200).json({ message: "login done! welcome *-*", user });
+    const authorization = jsonwebtoken_1.default.sign({
+        id: user._id,
+        userName: user.userName,
+        password: user.password,
+        email: user.email
+    }, "taskManager");
+    res.status(200).json({ message: "login done! welcome *-*", user, authorization });
 }));
 // ? //////////////////////////////////////////////////////////////////////////////////////////////////////
 // *get user

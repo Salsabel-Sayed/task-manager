@@ -13,14 +13,9 @@ export const signup = CatchErrors(async (req: CustomRequest, res: Response, next
     const user = new User({ userName, email, password });
     if(!user) return next(new AppErrors("your info not found!!!!",400))
     await user.save();
-const authorization = jwt.sign({
-    id: user._id,
-    userName: user.userName,
-    password: user.password,
-    email: user.email
-},"taskManager")
 
-    res.status(201).json({message:"signup done! welcome *-*",user,authorization});
+
+    res.status(201).json({message:"signup done! welcome *-*",user});
 })
 
 // ? //////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -32,7 +27,13 @@ export const login = CatchErrors(async (req: CustomRequest, res: Response, next:
     if(!user) return next(new AppErrors("user not found!!!!",400))
         const isMatch = await bcrypt.compare(password, user.password)
     if(!isMatch) return next(new AppErrors("password not match!!!!",400))
-        res.status(200).json({message:"login done! welcome *-*",user});
+        const authorization = jwt.sign({
+    id: user._id,
+    userName: user.userName,
+    password: user.password,
+    email: user.email
+},"taskManager")
+        res.status(200).json({message:"login done! welcome *-*",user,authorization});
 })
 
 // ? //////////////////////////////////////////////////////////////////////////////////////////////////////
